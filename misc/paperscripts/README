@@ -1,0 +1,42 @@
+This directory contains the required files to reproduce the analysis of Xen for
+XSAs with the help of CBMC and the abstract slicer.
+
+## Requirements
+
+Working docker setup. Machine with 8GB RAM (for this demo). For analysis with
+more depth, unwinding, or less slicing, more memory is recommended.
+
+## Quick Start
+
+The following script compiles all tools, as well as Xen for the analysis, and
+runs one example analysis:
+
+./run-full-example.sh
+
+
+## Step by Step
+
+### Docker
+
+As compiling Xen and CBMC requires dependencies, we add a Dockerfile that can be
+used to compile the tools and run the analysis. The additional script allows to
+execute commands as the calling user, but with the container system. This setup
+allows to consume the file created in the container outside the container as
+well.
+
+docker/Dockerfile ............ Docker file with dependencies to build Xen and
+                               CBMC
+docker/run_in_container.sh ... Script to execute commands inside a docker
+                               container with the ID of the calling user.
+
+### Scripts to Build and Analyze
+
+To build CBMC and Xen, run this script:
+
+./build.sh
+
+To run an analysis on Xen, the following script can be used as an entry point,
+as it provides all the relevant steps to be executed, i.e. linking the harness,
+slicing, and running the analysis.
+
+./execute-single-run.sh
