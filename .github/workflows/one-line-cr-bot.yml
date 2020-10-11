@@ -13,7 +13,7 @@ name: One Line CR Bot
 on:
   pull_request:
     # [ACTION REQUIRED] Set the branch you want to analyze PRs for
-    branches: [ mainline ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -52,7 +52,7 @@ jobs:
     - name: one-line-cr-analysis
       env:
         # [ACTION REQUIRED] Adapt the values below accordingly
-        BASE_COMMIT: "compare/coverity-tested/smoke" # 'compare' is the name of the remote to use
+        BASE_COMMIT: "compare/master" # 'compare' is the name of the remote to use
         BUILD_COMMAND: "make xen -B -j 2"
         CLEAN_COMMAND: "make clean -C xen -j 2"
         # These settings are more preferences, and not directly related to your project
