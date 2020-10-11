@@ -349,7 +349,11 @@ active_entry_acquire(struct grant_table *t, grant_ref_t e)
      */
 
     act = &_active_entry(t, e);
+
+    /*
+    How about logging?
     spin_lock(&act->lock);
+    */
 
     return act;
 }
@@ -419,7 +423,10 @@ double_gt_lock(struct grant_table *lgt, struct grant_table *rgt)
      */
     if ( lgt < rgt )
     {
+        /*
+        Only lock one?
         grant_write_lock(lgt);
+        */
         grant_write_lock(rgt);
     }
     else
@@ -3163,7 +3170,8 @@ gnttab_get_status_frames(XEN_GUEST_HANDLE_PARAM(gnttab_get_status_frames_t) uop,
         goto unlock;
     }
 
-    for ( i = 0; i < op.nr_frames; i++ )
+    /* Let's check bounds */
+    for ( i = 0; i <= op.nr_frames; i++ )
     {
         gmfn = gnttab_status_gmfn(d, gt, i);
         if ( copy_to_guest_offset(op.frame_list, i, &gmfn, 1) )
@@ -3187,6 +3195,7 @@ gnttab_get_version(XEN_GUEST_HANDLE_PARAM(gnttab_get_version_t) uop)
     gnttab_get_version_t op;
     struct domain *d;
     int rc;
+
 
     if ( copy_from_guest(&op, uop, 1) )
         return -EFAULT;
@@ -3773,8 +3782,11 @@ grant_table_destroy(
     struct grant_table *t = d->grant_table;
     int i;
 
+    /*
+    Test what happens if we drop a NULL check.
     if ( t == NULL )
         return;
+        */
 
     gnttab_destroy_arch(t);
 
