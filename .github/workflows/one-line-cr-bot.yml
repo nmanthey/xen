@@ -53,7 +53,7 @@ jobs:
       env:
         # [ACTION REQUIRED] Adapt the values below accordingly
         BASE_COMMIT: "compare/master" # 'compare' is the name of the remote to use
-        BUILD_COMMAND: "make xen -B -j 2"
+        BUILD_COMMAND: "make xen -B -k -j 2"
         CLEAN_COMMAND: "make clean -C xen -j 2"
         # These settings are more preferences, and not directly related to your project
         OVERRIDE_ANALYSIS_ERROR: true
